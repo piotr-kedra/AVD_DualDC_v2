@@ -82,15 +82,39 @@ l3_edge:
   p2p_links_profiles:
     - name: DCI_profile
       ip_pool: DCI_IP_pool
-      as: [65102, 65202]
+      as: [65100, 65200]
       include_in_underlay_protocol: true
   # Define each P2P L3 link and link the nodes, the interfaces and the profile used.
   p2p_links:
     - id: 1
-      nodes: [dc1-leaf2a, dc2-leaf2a]
-      interfaces: [Ethernet6, Ethernet6]
+      nodes: [dc1-spine1, dc2-spine1]
+      interfaces: [Ethernet5, Ethernet5]
       profile: DCI_profile
     - id: 2
-      nodes: [dc1-leaf2b, dc2-leaf2b]
+      nodes: [dc1-spine2, dc2-spine2]
+      interfaces: [Ethernet5, Ethernet5]
+      profile: DCI_profile
+    - id: 3
+      nodes: [dc1-spine1, dc2-spine2]
       interfaces: [Ethernet6, Ethernet6]
       profile: DCI_profile
+    - id: 4
+      nodes: [dc1-spine2, dc2-spine1]
+      interfaces: [Ethernet6, Ethernet6]
+      profile: DCI_profile
+
+
+# DNS Server
+dns_settings:
+  servers:
+    - ip_address: 8.8.8.8
+
+timezone: Europe/Warsaw
+
+# NTP Servers IP or DNS name, first NTP server will be preferred, and sourced from Management VRF
+ntp_settings:
+  server_vrf: use_mgmt_interface_vrf
+  servers:
+    - name: 0.pool.ntp.org
+    - name: time.windows.com
+    - name: time.apple.com
