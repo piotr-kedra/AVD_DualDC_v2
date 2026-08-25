@@ -1,0 +1,151 @@
+{
+  "freeTextAnnotations": [],
+  "freeShapeAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "dc1-spine2",
+      "position": {
+        "x": 7,
+        "y": 161
+      }
+    },
+    {
+      "id": "dc1-spine1",
+      "position": {
+        "x": -77,
+        "y": 161
+      }
+    },
+    {
+      "id": "dc1-leaf1-server1",
+      "position": {
+        "x": -91,
+        "y": 301
+      }
+    },
+    {
+      "id": "dc1-leaf1c",
+      "position": {
+        "x": -91,
+        "y": 273
+      }
+    },
+    {
+      "id": "dc1-leaf1a",
+      "position": {
+        "x": -133,
+        "y": 245
+      }
+    },
+    {
+      "id": "dc1-leaf1b",
+      "position": {
+        "x": -63,
+        "y": 245
+      }
+    },
+    {
+      "id": "dc1-leaf2c",
+      "position": {
+        "x": 21,
+        "y": 273
+      }
+    },
+    {
+      "id": "dc1-leaf2-server1",
+      "position": {
+        "x": 21,
+        "y": 301
+      }
+    },
+    {
+      "id": "dc1-leaf2a",
+      "position": {
+        "x": -7,
+        "y": 245
+      }
+    },
+    {
+      "id": "dc1-leaf2b",
+      "position": {
+        "x": 49,
+        "y": 245
+      }
+    },
+    {
+      "id": "dc2-spine2",
+      "position": {
+        "x": 7,
+        "y": 105
+      }
+    },
+    {
+      "id": "dc2-leaf2a",
+      "position": {
+        "x": -7,
+        "y": 63
+      }
+    },
+    {
+      "id": "dc2-spine1",
+      "position": {
+        "x": -77,
+        "y": 105
+      }
+    },
+    {
+      "id": "dc2-leaf2b",
+      "position": {
+        "x": 63,
+        "y": 63
+      }
+    },
+    {
+      "id": "dc2-leaf1b",
+      "position": {
+        "x": -77,
+        "y": 63
+      }
+    },
+    {
+      "id": "dc2-leaf1a",
+      "position": {
+        "x": -133,
+        "y": 63
+      }
+    },
+    {
+      "id": "dc2-leaf1c",
+      "position": {
+        "x": -105,
+        "y": 35
+      }
+    },
+    {
+      "id": "dc2-leaf1-server1",
+      "position": {
+        "x": -105,
+        "y": -7
+      }
+    },
+    {
+      "id": "dc2-leaf2-server1",
+      "position": {
+        "x": 35,
+        "y": -7
+      }
+    },
+    {
+      "id": "dc2-leaf2c",
+      "position": {
+        "x": 35,
+        "y": 35
+      }
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}
