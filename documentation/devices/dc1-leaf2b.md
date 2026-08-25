@@ -4,6 +4,10 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [IP Name Servers](#ip-name-servers)
+  - [Domain Lookup](#domain-lookup)
+  - [Clock Settings](#clock-settings)
+  - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
@@ -74,6 +78,77 @@ interface Management1
    no shutdown
    vrf MGMT
    ip address 172.16.1.104/24
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | MGMT | - |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf MGMT 8.8.8.8
+```
+
+### Domain Lookup
+
+#### DNS Domain Lookup Summary
+
+| Source interface | vrf |
+| ---------------- | --- |
+| Management1 | MGMT |
+
+#### DNS Domain Lookup Device Configuration
+
+```eos
+ip domain lookup vrf MGMT source-interface Management1
+```
+
+### Clock Settings
+
+#### Clock Timezone Settings
+
+Clock Timezone is set to **Europe/Warsaw**.
+
+#### Clock Device Configuration
+
+```eos
+!
+clock timezone Europe/Warsaw
+```
+
+### NTP
+
+#### NTP Summary
+
+##### NTP Local Interface
+
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
+
+##### NTP Servers
+
+NTP servers VRF: MGMT
+
+| Server | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Source Address | Key |
+| ------ | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | -------------- | --- |
+| 0.pool.ntp.org | True | - | - | - | - | - | - | - | - |
+| time.apple.com | - | - | - | - | - | - | - | - | - |
+| time.windows.com | - | - | - | - | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp local-interface vrf MGMT Management1
+ntp server vrf MGMT 0.pool.ntp.org prefer
+ntp server vrf MGMT time.apple.com
+ntp server vrf MGMT time.windows.com
 ```
 
 ### Management API HTTP
@@ -267,7 +342,6 @@ vlan 4094
 | --------- | ----------- | ------------- | ---------- | --- | --- | -------- | ------ | ------- |
 | Ethernet1 | P2P_dc1-spine1_Ethernet4 | - | 10.255.255.13/31 | default | 9214 | False | - | - |
 | Ethernet2 | P2P_dc1-spine2_Ethernet4 | - | 10.255.255.15/31 | default | 9214 | False | - | - |
-| Ethernet6 | P2P_dc2-leaf2b_Ethernet6 | - | 172.16.100.2/31 | default | 9214 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -301,13 +375,6 @@ interface Ethernet5
    description SERVER_dc1-leaf2-server1_PCI2
    no shutdown
    channel-group 5 mode active
-!
-interface Ethernet6
-   description P2P_dc2-leaf2b_Ethernet6
-   no shutdown
-   mtu 9214
-   no switchport
-   ip address 172.16.100.2/31
 !
 interface Ethernet8
    description L2_dc1-leaf2c_Ethernet2
@@ -675,7 +742,6 @@ ASN Notation: asplain
 | 10.255.128.6 | 65202 | default | - | Inherited from peer group EVPN-OVERLAY-CORE | Inherited from peer group EVPN-OVERLAY-CORE | - | Inherited from peer group EVPN-OVERLAY-CORE | - | - | - | - |
 | 10.255.255.12 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.14 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
-| 172.16.100.3 | 65202 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.1.100 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF10 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
 | 10.255.1.100 | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | VRF11 | - | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | Inherited from peer group MLAG-IPv4-UNDERLAY-PEER | - | - | - | - | - | - |
 
@@ -764,9 +830,6 @@ router bgp 65102
    neighbor 10.255.255.14 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.14 remote-as 65100
    neighbor 10.255.255.14 description dc1-spine2_Ethernet4
-   neighbor 172.16.100.3 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.16.100.3 remote-as 65202
-   neighbor 172.16.100.3 description dc2-leaf2b
    redistribute connected route-map RM-CONN-2-BGP
    !
    vlan 11

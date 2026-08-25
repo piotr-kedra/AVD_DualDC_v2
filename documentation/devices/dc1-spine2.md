@@ -4,6 +4,10 @@
 
 - [Management](#management)
   - [Management Interfaces](#management-interfaces)
+  - [IP Name Servers](#ip-name-servers)
+  - [Domain Lookup](#domain-lookup)
+  - [Clock Settings](#clock-settings)
+  - [NTP](#ntp)
   - [Management API HTTP](#management-api-http)
 - [Authentication](#authentication)
   - [Local Users](#local-users)
@@ -59,6 +63,77 @@ interface Management1
    no shutdown
    vrf MGMT
    ip address 172.16.1.12/24
+```
+
+### IP Name Servers
+
+#### IP Name Servers Summary
+
+| Name Server | VRF | Priority |
+| ----------- | --- | -------- |
+| 8.8.8.8 | MGMT | - |
+
+#### IP Name Servers Device Configuration
+
+```eos
+ip name-server vrf MGMT 8.8.8.8
+```
+
+### Domain Lookup
+
+#### DNS Domain Lookup Summary
+
+| Source interface | vrf |
+| ---------------- | --- |
+| Management1 | MGMT |
+
+#### DNS Domain Lookup Device Configuration
+
+```eos
+ip domain lookup vrf MGMT source-interface Management1
+```
+
+### Clock Settings
+
+#### Clock Timezone Settings
+
+Clock Timezone is set to **Europe/Warsaw**.
+
+#### Clock Device Configuration
+
+```eos
+!
+clock timezone Europe/Warsaw
+```
+
+### NTP
+
+#### NTP Summary
+
+##### NTP Local Interface
+
+| Interface | VRF |
+| --------- | --- |
+| Management1 | MGMT |
+
+##### NTP Servers
+
+NTP servers VRF: MGMT
+
+| Server | Preferred | Burst | iBurst | Version | Min Poll | Max Poll | Local-interface | Source Address | Key |
+| ------ | --------- | ----- | ------ | ------- | -------- | -------- | --------------- | -------------- | --- |
+| 0.pool.ntp.org | True | - | - | - | - | - | - | - | - |
+| time.apple.com | - | - | - | - | - | - | - | - | - |
+| time.windows.com | - | - | - | - | - | - | - | - | - |
+
+#### NTP Device Configuration
+
+```eos
+!
+ntp local-interface vrf MGMT Management1
+ntp server vrf MGMT 0.pool.ntp.org prefer
+ntp server vrf MGMT time.apple.com
+ntp server vrf MGMT time.windows.com
 ```
 
 ### Management API HTTP

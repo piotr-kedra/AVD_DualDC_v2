@@ -1,5 +1,7 @@
 aaa_root:
   disabled: true
+clock:
+  timezone: Europe/Warsaw
 config_end: true
 enable_password:
   disabled: true
@@ -56,17 +58,6 @@ ethernet_interfaces:
     peer: dc1-leaf2c
     peer_interface: Ethernet2
     peer_type: l2leaf
-- name: Ethernet6
-  description: P2P_dc2-leaf2b_Ethernet6
-  shutdown: false
-  mtu: 9214
-  ip_address: 172.16.100.2/31
-  metadata:
-    peer: dc2-leaf2b
-    peer_interface: Ethernet6
-    peer_type: l3leaf
-  switchport:
-    enabled: false
 - name: Ethernet5
   description: SERVER_dc1-leaf2-server1_PCI2
   shutdown: false
@@ -79,8 +70,17 @@ ethernet_interfaces:
     peer_type: server
     peer_key: servers
 hostname: dc1-leaf2b
+ip_domain_lookup:
+  source_interfaces:
+  - name: Management1
+    vrf: MGMT
 ip_igmp_snooping:
   globally_enabled: true
+ip_name_server:
+  vrfs:
+  - name: MGMT
+    servers:
+    - ip_address: 8.8.8.8
 ip_routing: true
 ip_virtual_router_mac_address: 00:1c:73:00:00:99
 local_users:
@@ -136,6 +136,16 @@ mlag_configuration:
   peer_link: Port-Channel3
   reload_delay_mlag: '300'
   reload_delay_non_mlag: '330'
+ntp:
+  local_interface:
+    name: Management1
+    vrf: MGMT
+  servers:
+  - name: 0.pool.ntp.org
+    preferred: true
+  - name: time.windows.com
+  - name: time.apple.com
+  vrf: MGMT
 port_channel_interfaces:
 - name: Port-Channel3
   description: MLAG_dc1-leaf2a_Port-Channel3
@@ -282,12 +292,6 @@ router_bgp:
     metadata:
       peer: dc2-leaf2b
     description: dc2-leaf2b_Loopback0
-  - ip_address: 172.16.100.3
-    peer_group: IPv4-UNDERLAY-PEERS
-    remote_as: '65202'
-    metadata:
-      peer: dc2-leaf2b
-    description: dc2-leaf2b
   redistribute:
     connected:
       enabled: true
