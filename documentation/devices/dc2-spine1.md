@@ -234,6 +234,8 @@ vlan internal order ascending range 1006 1199
 | Ethernet2 | P2P_dc2-leaf1b_Ethernet1 | - | 10.255.255.68/31 | default | 9214 | False | - | - |
 | Ethernet3 | P2P_dc2-leaf2a_Ethernet1 | - | 10.255.255.72/31 | default | 9214 | False | - | - |
 | Ethernet4 | P2P_dc2-leaf2b_Ethernet1 | - | 10.255.255.76/31 | default | 9214 | False | - | - |
+| Ethernet5 | P2P_dc1-spine1_Ethernet5 | - | 172.16.100.1/31 | default | 9214 | False | - | - |
+| Ethernet6 | P2P_dc1-spine2_Ethernet6 | - | 172.16.100.7/31 | default | 9214 | False | - | - |
 
 #### Ethernet Interfaces Device Configuration
 
@@ -266,6 +268,20 @@ interface Ethernet4
    mtu 9214
    no switchport
    ip address 10.255.255.76/31
+!
+interface Ethernet5
+   description P2P_dc1-spine1_Ethernet5
+   no shutdown
+   mtu 9214
+   no switchport
+   ip address 172.16.100.1/31
+!
+interface Ethernet6
+   description P2P_dc1-spine2_Ethernet6
+   no shutdown
+   mtu 9214
+   no switchport
+   ip address 172.16.100.7/31
 ```
 
 ### Loopback Interfaces
@@ -395,6 +411,8 @@ ASN Notation: asplain
 | 10.255.255.69 | 65201 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.73 | 65202 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 | 10.255.255.77 | 65202 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 172.16.100.0 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
+| 172.16.100.6 | 65100 | default | - | Inherited from peer group IPv4-UNDERLAY-PEERS | Inherited from peer group IPv4-UNDERLAY-PEERS | - | - | - | - | - | - |
 
 #### Router BGP EVPN Address Family
 
@@ -448,6 +466,12 @@ router bgp 65200
    neighbor 10.255.255.77 peer group IPv4-UNDERLAY-PEERS
    neighbor 10.255.255.77 remote-as 65202
    neighbor 10.255.255.77 description dc2-leaf2b_Ethernet1
+   neighbor 172.16.100.0 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.16.100.0 remote-as 65100
+   neighbor 172.16.100.0 description dc1-spine1
+   neighbor 172.16.100.6 peer group IPv4-UNDERLAY-PEERS
+   neighbor 172.16.100.6 remote-as 65100
+   neighbor 172.16.100.6 description dc1-spine2
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn

@@ -1,6 +1,7 @@
 {
   "freeTextAnnotations": [],
   "freeShapeAnnotations": [],
+  "trafficRateAnnotations": [],
   "groupStyleAnnotations": [],
   "networkNodeAnnotations": [],
   "nodeAnnotations": [
@@ -14,8 +15,8 @@
     {
       "id": "dc1-spine1",
       "position": {
-        "x": -77,
-        "y": 161
+        "x": -80,
+        "y": 160
       }
     },
     {

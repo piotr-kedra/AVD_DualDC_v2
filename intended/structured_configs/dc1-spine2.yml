@@ -50,6 +50,28 @@ ethernet_interfaces:
     peer_type: l3leaf
   switchport:
     enabled: false
+- name: Ethernet5
+  description: P2P_dc2-spine2_Ethernet5
+  shutdown: false
+  mtu: 9214
+  ip_address: 172.16.100.2/31
+  metadata:
+    peer: dc2-spine2
+    peer_interface: Ethernet5
+    peer_type: spine
+  switchport:
+    enabled: false
+- name: Ethernet6
+  description: P2P_dc2-spine1_Ethernet6
+  shutdown: false
+  mtu: 9214
+  ip_address: 172.16.100.6/31
+  metadata:
+    peer: dc2-spine1
+    peer_interface: Ethernet6
+    peer_type: spine
+  switchport:
+    enabled: false
 hostname: dc1-spine2
 ip_domain_lookup:
   source_interfaces:
@@ -194,6 +216,18 @@ router_bgp:
     metadata:
       peer: dc1-leaf2b
     description: dc1-leaf2b_Loopback0
+  - ip_address: 172.16.100.3
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    metadata:
+      peer: dc2-spine2
+    description: dc2-spine2
+  - ip_address: 172.16.100.7
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65200'
+    metadata:
+      peer: dc2-spine1
+    description: dc2-spine1
   redistribute:
     connected:
       enabled: true
